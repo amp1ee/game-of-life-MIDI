@@ -1,3 +1,4 @@
+#!/usr/bin/env raku
 #`<<
     A GoL in Raku
     Written by: Amplee
@@ -17,12 +18,12 @@ sub game-of-life_grid($m, $n, $population) {
     my @grid;
     my $total-cells = $m * $n;
     my $alive-cells = ($total-cells * $population / 100).Int;
-    
+
     # Initialize the grid with dead cells
     for 0 ..^ $m -> $i {
         @grid[$i] = [ 0 xx $n ];
     }
-    
+
     # Randomly place alive cells according to population percentage
     while $alive-cells > 0 {
         my $i = (0..^$m).pick;
@@ -43,13 +44,13 @@ sub game-of-life_neighbors($grid, $i, $j) {
     my $neighbors = 0;
     my $rows = $grid.elems;
     my $cols = $grid[0].elems;
-    
+
     for -1..1 -> $di {
         for -1..1 -> $dj {
             if $di != 0 || $dj != 0 {
                 my $ni = $i + $di;
                 my $nj = $j + $dj;
-                
+
                 # Check if the neighbor is within grid bounds
                 if $ni >= 0 && $ni < $rows && $nj >= 0 && $nj < $cols {
                     $neighbors += $grid[$ni][$nj];
@@ -96,9 +97,9 @@ sub encode-ansi-color($color, $text) {
 ]]
 my @grid;
 
-# Parse the image if provided, otherwise generate a random grid
+# Parse the json grid if provided, otherwise generate a random grid
 if @*ARGS[0] {
-    say "Parsing image... @*ARGS[0]";
+    say "Parsing data... @*ARGS[0]";
     @grid = game-of-life_parse-json(@*ARGS[0]);
 } else {
     @grid = game-of-life_grid(60, 100, 10);
@@ -115,8 +116,7 @@ loop {
 
     @grid = game-of-life_evolve(@grid);
     for @grid.kv -> $i, $row {
-        # say $row.map({ $_ ??
-        #     encode-ansi-color($RED, "#") !! " " }).join;
+
         my $line = "";
         for $row.kv -> $j, $cell {
             if $cell && !@prev-grid[$i][$j] {
