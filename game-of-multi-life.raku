@@ -122,17 +122,16 @@ if @*ARGS[0] {
     say "Parsing data... @*ARGS[0]";
     @grid = game-of-life_parse-json(@*ARGS[0]);
 } else {
-    @grid = game-of-life_grid(60, 100, 10);
+    @grid = game-of-life_grid(60, 100, 15);
 }
 
 my @prev-grid = @grid;
 my $generation = 0;
 
+print "\e[2J";         # Clear the screen
+
 loop {
-    # Clear the screen depending on OS
-    my $clear-cmd =
-        $*DISTRO.name.lc.contains("win") ?? "cls" !! "clear";
-    shell($clear-cmd);
+    print "\e[H";      # Move cursor to (0,0)
 
     @grid = game-of-life_evolve(@grid);
     for @grid.kv -> $i, $row {
@@ -170,5 +169,5 @@ loop {
         @prev-grid = @grid;
     }
     $generation++;
-    sleep 0.1;
+    sleep 0.04;
 }

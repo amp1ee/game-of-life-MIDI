@@ -108,11 +108,10 @@ if @*ARGS[0] {
 my @prev-grid = @grid;
 my $generation = 0;
 
+print "\e[2J";         # Clear the screen
+
 loop {
-    # Clear the screen depending on OS
-    my $clear-cmd =
-        $*DISTRO.name.lc.contains("win") ?? "cls" !! "clear";
-    shell($clear-cmd);
+    print "\e[H";      # Move cursor to (0,0)
 
     @grid = game-of-life_evolve(@grid);
     for @grid.kv -> $i, $row {
@@ -127,12 +126,12 @@ loop {
                 $line ~= " ";
             }
         }
-        say $line;
+        print $line ~ "\n";
     }
- 
-    say "-" x @grid[0].elems;
 
-    say "Generation: $generation";
+    print ("-" x @grid[0].elems) ~ "\n";
+    print "Generation: $generation" ~ "\n";
+
     if @grid eq @prev-grid and $generation % 2 == 0 {
         say "Reached equilibrium at generation $generation";
         last;
@@ -143,5 +142,5 @@ loop {
         @prev-grid = @grid;
     }
     $generation++;
-    sleep 0.1;
+    sleep 0.04;
 }
