@@ -2,4 +2,5 @@
 
 <p align="center">
   <img src="assets/Capture.PNG" alt="Game of Life preview">
+  <img src="assets/Capture-multi.PNG" alt="Game of Life multi">
 </p>
