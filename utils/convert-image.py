@@ -2,6 +2,7 @@
 
 from PIL import Image
 import json
+import os
 import sys
 
 def png_to_grid(path, grid_size_px):
@@ -37,7 +38,7 @@ def png_to_grid(path, grid_size_px):
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        print("Usage: png2grid.py <image.png> <grid_size_px>")
+        print("Usage: " + os.path.basename(sys.argv[0]) + " <image.png> <grid_size_px>")
         sys.exit(1)
 
     path = sys.argv[1]
