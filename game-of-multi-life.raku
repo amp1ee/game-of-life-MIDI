@@ -10,6 +10,7 @@ use MIDI::Make;
 
 # Global variables
 my @grid;
+my $generation = 0;
 my $midi-file = "midi/gol-output.mid";
 my $no-midi = False;
 my $song = MIDI::Make::Song.new(:PPQ(96), :format(0));
@@ -24,14 +25,26 @@ sub gol_grid-append-to-midi(@grid) {
     my $velocity = 64;
     my $note-length = 48;
 
-    # Define a scale (A minor): A B C D E F G
-    my @scale = (0, 2, 3, 5, 7, 8, 10);
+    # Define a scale:
+    my @scale1 = (0, 2, 3, 5, 7, 8, 10); # A minor
+    my @scale2 = (2, 3, 5, 7, 8, 10, 0);
+    my @scale3 = (3, 5, 7, 8, 10, 0, 2);
+    my @scale4 = (5, 7, 8, 10, 0, 2, 3);
     my $base-note = 57 - 24; # A1
     my $max-octave = 5;
 
     # Map a (row, col) position to a scale-based MIDI note
     sub janko-scale-note(Int $row, Int $col --> UInt) {
         my $index = $col + $row * 5;
+
+        # choose a different scale each (4,8,12,16) generations:
+        my $scale-index = ($generation div (4, 8, 12, 16).pick % 4);
+        my @scale = do given $scale-index {
+            when 0 { @scale1 }
+            when 1 { @scale2 }
+            when 2 { @scale3 }
+            when 3 { @scale4 }
+        };
         my $note-in-scale = @scale[$index % @scale.elems];
         my $octave = ($index div @scale.elems);
         $octave = $max-octave if $octave > $max-octave;
@@ -210,7 +223,6 @@ sub gol_parse-args() {
 
 sub gol_loop() {
     my @prev-grid = @grid;
-    my $generation = 0;
 
     print "\e[2J";         # Clear the screen
     loop {
