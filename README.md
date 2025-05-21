@@ -6,7 +6,7 @@ https://github-production-user-asset-6210df.s3.amazonaws.com/29763644/446235731-
 ---
 📌 **P.S.** The sound you hear in the demo comes from the program’s MIDI output (scaled to A minor), which was then rendered in FL Studio.
 
-📌 The video is slowed down ~8 times to be in sync with generated audio.
+🎼 The video is slowed down ~8 times to be in sync with generated audio.
 
 ## Screenshots (single/multi-life mode):
 <p align="center">
