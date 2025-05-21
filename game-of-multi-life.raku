@@ -12,51 +12,48 @@ use MIDI::Make;
 my @grid;
 my $midi-file = "midi/gol-output.mid";
 my $no-midi = False;
-my $base-octave = 4;
 my $song = MIDI::Make::Song.new(:PPQ(96), :format(0));
 my $track = MIDI::Make::Track.new;
 $track.tempo: ♩174;
 
 #`[[
-    Append the current grid state to the midi file
+    Append the current grid state to the MIDI file using a Janko-inspired
+    layout mapped to a minor scale for better tonality.
 ]]
 sub gol_grid-append-to-midi(@grid) {
     my $velocity = 64;
     my $note-length = 48;
 
-    sub scale-note(Int $i --> UInt) {
-        my %note-map = (
-            C => 0,  Cs => 1,  D => 2,  Ds => 3,
-            E => 4,  F  => 5,  Fs => 6, G => 7,
-            Gs => 8, A  => 9,  As => 10, B => 11
-        );
-        my @scale = <A B C D E F G>;
-        my $max-octave-increment = 5;  # max octave offset from base octave
+    # Define a scale (A minor): A B C D E F G
+    my @scale = (0, 2, 3, 5, 7, 8, 10);
+    my $base-note = 57 - 24; # A1
+    my $max-octave = 5;
 
-        my $note-name = @scale[$i % @scale.elems];
-        my $octave-increment = ($i div 12);
+    # Map a (row, col) position to a scale-based MIDI note
+    sub janko-scale-note(Int $row, Int $col --> UInt) {
+        my $index = $col + $row * 5;
+        my $note-in-scale = @scale[$index % @scale.elems];
+        my $octave = ($index div @scale.elems);
+        $octave = $max-octave if $octave > $max-octave;
 
-        $octave-increment = $max-octave-increment if $octave-increment > $max-octave-increment;
-
-        my $octave = $base-octave + $octave-increment;
-        my $midi-note = (%note-map{$note-name} + 12 * $octave).UInt;
-
-        return $midi-note min 127;
+        return ($base-note + 12 * $octave + $note-in-scale) min 127;
     }
 
-    # Transform the grid into a list of unique notes
+    # Build list of active notes (each cell becomes a note if alive)
     my %seen;
     my @notes = gather for @grid.kv -> $row-idx, @row {
         for @row.kv -> $col-idx, $v {
-            # Take the note according to the row index
             if $v {
-                my $scaled-note = scale-note($row-idx % 127);
-                take $scaled-note unless %seen{$scaled-note};
-                %seen{$scaled-note} = True;
+                my $note = janko-scale-note($row-idx, $col-idx);
+                unless %seen{$note} {
+                    take $note;
+                    %seen{$note} = True;
+                }
             }
         }
     }
 
+    # Play the notes with a "strum" effect to avoid full block chords
     if @notes {
         my $strum-length = ($note-length / @notes.elems).UInt;
         for @notes -> UInt $note {
@@ -64,13 +61,14 @@ sub gol_grid-append-to-midi(@grid) {
             $track.delta-time($strum-length);
         }
 
+        # Wait before turning off the notes
         $track.delta-time(2 * $strum-length);
 
         for @notes -> UInt $note {
             $track.note-off($note, 0);
         }
     } else {
-        # Silence
+        # No live cells: write a rest
         $track.delta-time($note-length);
     }
 }
