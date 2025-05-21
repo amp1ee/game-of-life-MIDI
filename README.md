@@ -8,7 +8,7 @@ https://github-production-user-asset-6210df.s3.amazonaws.com/29763644/446235731-
 
 ## Screenshots (single/multi-life mode):
 <p align="center">
-  <img src="assets/Capture.PNG"       alt="Game of Life preview" width="480">
-  <img src="assets/Capture-multi.PNG" alt="Game of Life multi"   width="480">
+  <img src="assets/Capture.PNG"       alt="Game of Life preview" width="450">
+  <img src="assets/Capture-multi.PNG" alt="Game of Life multi"   width="450">
 </p>
 
