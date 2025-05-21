@@ -16,9 +16,21 @@ def png_to_grid(path, grid_size_px):
         for j in range(cells_x):
             x = j * grid_size_px
             y = i * grid_size_px
-            r, g, b = img.getpixel((x, y))
+            # get the average of $grid_size_px pixels
             # dark = alive, threshold RGB sum < 384 (i.e. avg < 128)
-            row.append(1 if r + g + b < 384 else 0)
+            total_r = 0
+            total_g = 0
+            total_b = 0
+            for k in range(grid_size_px):
+                for l in range(grid_size_px):
+                    r, g, b = img.getpixel((x + k, y + l))
+                    total_r += r
+                    total_g += g
+                    total_b += b
+            avg_r = total_r // (grid_size_px * grid_size_px)
+            avg_g = total_g // (grid_size_px * grid_size_px)
+            avg_b = total_b // (grid_size_px * grid_size_px)
+            row.append(1 if avg_r + avg_g + avg_b < 384 else 0)
         grid.append(row)
 
     return grid
