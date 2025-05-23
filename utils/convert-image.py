@@ -31,7 +31,8 @@ def png_to_grid(path, grid_size_px):
             avg_r = total_r // (grid_size_px * grid_size_px)
             avg_g = total_g // (grid_size_px * grid_size_px)
             avg_b = total_b // (grid_size_px * grid_size_px)
-            row.append(1 if avg_r + avg_g + avg_b < 384 else 0)
+
+            row.append(1 if avg_r + avg_g + avg_b < 200 * 3 else 0)
         grid.append(row)
 
     return grid
