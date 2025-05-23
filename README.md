@@ -2,7 +2,7 @@
 
 ## Game-of-Life audification demo:
 
-https://github.com/user-attachments/assets/723f4220-a1ec-4c3e-bf6d-80fd12d86e40
+https://github.com/user-attachments/assets/b780f4e4-5dc2-4ee7-aac6-f4ea78996d87
 
 ---
 📌 **P.S.** The sound you hear in the demo comes from the program’s MIDI output (in A minor), rendered in FL Studio.
