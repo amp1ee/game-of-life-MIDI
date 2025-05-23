@@ -23,7 +23,7 @@ https://github.com/user-attachments/assets/1a57e650-8388-4462-bd0a-5c50c011dd45
 
 
 ---
-📌 **P.S.** The sound you hear in the demo comes from the program’s MIDI output, rendered in FL Studio.
+📌 **P.S.** The sound you hear in the demos comes from the program’s MIDI output, rendered in FL Studio.
 
 ## Screenshots (single/multi-life mode):
 <p align="center">
