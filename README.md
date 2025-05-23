@@ -1,7 +1,8 @@
 <h1 align="center">🌱 Game of Life</h1>
 
 ## Game-of-Life audification demo:
-https://github-production-user-asset-6210df.s3.amazonaws.com/29763644/446235731-468c8c5c-8604-4d40-96e2-344a4060e5f8.mp4
+
+https://github.com/user-attachments/assets/723f4220-a1ec-4c3e-bf6d-80fd12d86e40
 
 ---
 📌 **P.S.** The sound you hear in the demo comes from the program’s MIDI output (in A minor), rendered in FL Studio.
