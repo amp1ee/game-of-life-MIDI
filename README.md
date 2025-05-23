@@ -5,7 +5,7 @@
 https://github.com/user-attachments/assets/b780f4e4-5dc2-4ee7-aac6-f4ea78996d87
 
 ---
-📌 **P.S.** The sound you hear in the demo comes from the program’s MIDI output (in A minor), rendered in FL Studio.
+📌 **P.S.** The sound you hear in the demo comes from the program’s MIDI output, rendered in FL Studio.
 
 ## Screenshots (single/multi-life mode):
 <p align="center">
