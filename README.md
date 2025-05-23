@@ -7,8 +7,6 @@ https://github.com/user-attachments/assets/723f4220-a1ec-4c3e-bf6d-80fd12d86e40
 ---
 📌 **P.S.** The sound you hear in the demo comes from the program’s MIDI output (in A minor), rendered in FL Studio.
 
-🎼 The video is slowed down ~8x to match the generated audio.
-
 ## Screenshots (single/multi-life mode):
 <p align="center">
   <img src="assets/Capture.PNG"       alt="Game of Life preview" width="450">
