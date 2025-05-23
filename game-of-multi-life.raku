@@ -11,7 +11,8 @@ use MIDI::Make;
 # Global variables
 my @grid;
 my $generation = 0;
-my $midi-file = "midi/gol-output.mid";
+my $sleep-time //= 0.04;
+my $midi-file = "midi/gol-output-" ~ time.Str ~ ".mid";
 my $no-midi = False;
 my $song = MIDI::Make::Song.new(:PPQ(96), :format(0));
 my $track = MIDI::Make::Track.new;
@@ -26,10 +27,11 @@ sub gol_grid-append-to-midi(@grid) {
     my $note-length = 48;
 
     # Define a scale:
-    my @scale1 = (0, 2, 3, 5, 7, 8, 10); # A minor
-    my @scale2 = (2, 3, 5, 7, 8, 10, 0);
-    my @scale3 = (3, 5, 7, 8, 10, 0, 2);
-    my @scale4 = (5, 7, 8, 10, 0, 2, 3);
+    # pentatonic scales
+    my @scale1 = (0, 3, 5, 7, 10);
+    my @scale2 = (3, 5, 7, 10, 0);
+    my @scale3 = (5, 7, 10, 0, 3);
+    my @scale4 = (7, 10, 0, 3, 5);
     my $base-note = 57 - 24; # A1
     my $max-octave = 5;
 
@@ -200,16 +202,25 @@ sub gol_encode-ansi-color($color, $text) {
     Parse the command line arguments
 ]]
 sub gol_parse-args() {
-    for @*ARGS -> $arg {
+    my $i = 0;
+    while $i < @*ARGS {
+        my $arg = @*ARGS[$i];
         if $arg ~~ / '.json' $ / {
-            # Parse the json grid if provided
             say "Parsing data... $arg";
             @grid = gol_parse-json($arg);
         } elsif $arg ~~ / '.mid' $ / {
             $midi-file = $arg;
         } elsif $arg eq "--no-midi" {
             $no-midi = True;
+        } elsif $arg eq "--sleep" {
+            $i++;
+            if $i < @*ARGS && @*ARGS[$i] ~~ /^\d+$/ {
+                $sleep-time = @*ARGS[$i].Int;
+            } else {
+                die "Expected numeric value after --sleep";
+            }
         }
+        $i++;
     }
 
     # defer saving the midi file when the program exits
@@ -228,7 +239,6 @@ sub gol_loop() {
     loop {
         print "\e[H";      # Move cursor to (0,0)
 
-        @grid = gol_evolve(@grid);
         for @grid.kv -> $i, $row {
 
             my $line = "";
@@ -252,7 +262,7 @@ sub gol_loop() {
         gol_grid-append-to-midi(@grid) unless $no-midi;
 
         say "Generation: $generation";
-        if @grid eq @prev-grid and $generation % 2 == 0 {
+        if @grid eq @prev-grid and $generation > 0 and $generation % 2 == 0 {
             say "Reached equilibrium at generation $generation";
             my ($score_1, $score_2) = gol_calculate-score(@grid);
             say "Final score: " ~ gol_encode-ansi-color($GREEN, $score_1) ~ " : "
@@ -266,8 +276,11 @@ sub gol_loop() {
         if ($generation % 2) == 0 {
             @prev-grid = @grid;
         }
+
+        @grid = gol_evolve(@grid);
         $generation++;
-        sleep 0.04;
+
+        sleep $sleep-time;
     }
 }
 
