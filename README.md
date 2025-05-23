@@ -6,8 +6,8 @@
 ### Requirements:
   - [Install rakudo](https://rakudo.org/downloads)
   - zef install MIDI::Make
-  - zef install JSON::Fast #`(*)
-  > #`(*) Zef is a package manager dedicated for Raku language.
+  - zef install JSON::Fast
+  > #`< Zef is a package manager dedicated for Raku language >
 
 ### Documentation:
 <a href="https://deepwiki.com/amp1ee/game-of-life-MIDI"><img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki"></a>
