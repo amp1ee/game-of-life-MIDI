@@ -13,9 +13,14 @@
 <a href="https://deepwiki.com/amp1ee/game-of-life-MIDI"><img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki"></a>
 
 
-## Game-of-Life audification demo:
+## Game-of-Life audification demos:
 
 https://github.com/user-attachments/assets/b780f4e4-5dc2-4ee7-aac6-f4ea78996d87
+
+
+https://github.com/user-attachments/assets/1a57e650-8388-4462-bd0a-5c50c011dd45
+
+
 
 ---
 📌 **P.S.** The sound you hear in the demo comes from the program’s MIDI output, rendered in FL Studio.
