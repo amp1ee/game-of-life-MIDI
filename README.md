@@ -4,8 +4,10 @@
   > $ raku ./game-of-multi-life.raku [<\*.mid>/--no-midi] [--sleep sec] [[examples/\*.json]]
 
 ### Requirements:
-  [https://rakudo.org/downloads](rakudo)
+  [Install rakudo](https://rakudo.org/downloads)
+  
   zef install MIDI::Make
+  
   zef install JSON::Fast
 
 ### Documentation:
