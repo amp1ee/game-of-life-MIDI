@@ -14,6 +14,7 @@
 
 
 ## Game-of-Life audification demos:
+📌 The arpeggios you can hear are basically taken from the program’s MIDI output and rendered in FL Studio at a very low BPM.
 
 https://github.com/user-attachments/assets/b780f4e4-5dc2-4ee7-aac6-f4ea78996d87
 
@@ -23,7 +24,7 @@ https://github.com/user-attachments/assets/1a57e650-8388-4462-bd0a-5c50c011dd45
 
 
 ---
-📌 **P.S.** The arpeggios you hear in there are basically taken from the program’s MIDI output, and rendered in FL Studio in a very low BPM.
+
 
 ## Screenshots (single/multi-life mode):
 <p align="center">
