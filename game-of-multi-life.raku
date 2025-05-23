@@ -20,7 +20,7 @@ $track.tempo: ♩174;
 
 #`[[
     Append the current grid state to the MIDI file using a Janko-inspired
-    layout mapped to a minor scale for better tonality.
+    layout
 ]]
 sub gol_grid-append-to-midi(@grid) {
     my $velocity = 64;
