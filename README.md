@@ -1,7 +1,7 @@
 <h1 align="center">🌱 Game of Life</h1>
 
 ### Usage:
-  > $ raku ./game-of-multi-life.raku [<\*.mid>/--no-midi] [--sleep sec] [[examples/\*.json]]
+  > $ raku ./game-of-multi-life.raku [<\*.mid>/--no-midi] [--sleep sec] [<examples/\*.json>]
 
 ### Requirements:
   - [Install rakudo](https://rakudo.org/downloads)
