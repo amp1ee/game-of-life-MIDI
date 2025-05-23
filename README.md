@@ -1,5 +1,13 @@
 <h1 align="center">🌱 Game of Life</h1>
 
+### Usage:
+  > $ raku ./game-of-multi-life.raku [<\*.mid>/--no-midi] [--sleep sec] [[examples/\*.json]]
+
+### Requirements:
+  [https://rakudo.org/downloads](rakudo)
+  zef install MIDI::Make
+  zef install JSON::Fast
+
 ### Documentation:
 <a href="https://deepwiki.com/amp1ee/game-of-life-MIDI"><img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki"></a>
 
