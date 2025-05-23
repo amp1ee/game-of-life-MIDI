@@ -1,5 +1,9 @@
 <h1 align="center">🌱 Game of Life</h1>
 
+### Documentation:
+<a href="https://deepwiki.com/amp1ee/game-of-life-MIDI"><img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki"></a>
+
+
 ## Game-of-Life audification demo:
 
 https://github.com/user-attachments/assets/b780f4e4-5dc2-4ee7-aac6-f4ea78996d87
