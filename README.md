@@ -5,7 +5,7 @@
 
 ### Requirements:
   - [Install rakudo](https://rakudo.org/downloads)
-  - zef install MIDI::Make
+  - zef install MIDI::Make --force-test
   - zef install JSON::Fast
   > #`< Zef is a package manager dedicated for Raku language >
 
