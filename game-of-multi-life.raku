@@ -245,7 +245,7 @@ sub gol_parse-args() {
             if $i < @*ARGS {
                 if @*ARGS[$i] ~~ /^\d+$/ {
                     $scale-offset = @*ARGS[$i].Int;
-                } elsif @*ARGS[$i] ~~ /^\w+$/ {
+                } elsif @*ARGS[$i] ~~ / ^<[A..G]><[# b]>?$ / {
                     $scale-offset = %scale-letter-to-offset{@*ARGS[$i]};
                 } else {
                     die "Expected numeric or scale letter after --scale";
