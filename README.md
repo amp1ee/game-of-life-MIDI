@@ -1,12 +1,12 @@
 <h1 align="center">🌱 Game of Life</h1>
 
 ### Usage:
-  > $ raku ./game-of-multi-life.raku [<\*.mid>/--no-midi] [--sleep sec] [<examples/\*.json>]
+  > $ raku ./game-of-multi-life.raku [<\*.mid>/--no-midi] [--sleep sec] [<examples/\*.json>] [--key offset / letter]
 
 ### Requirements:
   - [Install rakudo](https://rakudo.org/downloads)
   - zef install MIDI::Make --force-test
-  - zef install JSON::Fast
+  - zef install JSON::Fast (should already be installed with MIDI::Make)
   > #`< Zef is a package manager dedicated for Raku language >
 
 ### Documentation:

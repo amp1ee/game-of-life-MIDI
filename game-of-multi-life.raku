@@ -11,8 +11,8 @@ use MIDI::Make;
 # Global variables
 my @grid;
 my $generation = 0;
-my $scale-offset = 0;
-my %scale-letter-to-offset = (
+my $key-offset = 0;
+my %key-letter-to-offset = (
     "A"  =>  0,
     "A#" =>  1,
     "Bb" =>  1,
@@ -53,7 +53,7 @@ sub gol_grid-append-to-midi(@grid) {
     my @scale2 = (3, 5, 7, 10, 0);
     my @scale3 = (5, 7, 10, 0, 3);
     my @scale4 = (7, 10, 0, 3, 5);
-    my $base-note = 33 + $scale-offset;
+    my $base-note = 33 + $key-offset; # Note A is default
     my $max-octave = 5;
 
     # Map a (row, col) position to a scale-based MIDI note
@@ -240,19 +240,29 @@ sub gol_parse-args() {
             } else {
                 die "Expected numeric value after --sleep";
             }
-        } elsif $arg eq "--scale" {
+        } elsif $arg eq "--key" {
             $i++;
             if $i < @*ARGS {
-                if @*ARGS[$i] ~~ /^\d+$/ {
-                    $scale-offset = @*ARGS[$i].Int;
-                } elsif @*ARGS[$i] ~~ / ^<[A..G]><[# b]>?$ / {
-                    $scale-offset = %scale-letter-to-offset{@*ARGS[$i]};
+                if @*ARGS[$i] ~~ /^\-?\d+$/ {
+                    $key-offset = @*ARGS[$i].Int;
+                } elsif @*ARGS[$i] ~~ / ^<[A..G]><[# b ♯ ♭]>?$ / {
+                    $key-offset = %key-letter-to-offset{@*ARGS[$i]};
                 } else {
-                    die "Expected numeric or scale letter after --scale";
+                    die "Expected numeric or key letter (e.g. -3 or D#) \
+                            after --key";
                 }
             }
         } elsif $arg eq "-h" || $arg eq "--help" {
-            say "Usage: $0 [--scale <scale offset / letter>] [--sleep <seconds>] [<midi-output-file>/--no-midi] <json-file>";
+            say "Usage: ./$*PROGRAM-NAME [--key <key offset / letter>] \
+                [--sleep <seconds>] [<midi-output-file>/--no-midi] <json-file>";
+            say "  --key <key offset / letter> - Set the key offset or letter, \
+                e.g. --key 3 means Cm, or --key D#/Gb, etc.";
+            say "  --sleep <seconds> - Set the sleep time between generations, \
+                default is 0.04";
+            say "  <midi-output-file> - Write the MIDI output to a file, \
+                default is './midi/gol-output-<timestamp>.mid'";
+            say "  --no-midi - Do not write the MIDI output";
+            say "  <json-file> - Read the initial grid state from a JSON file";
             exit;
         }
         $i++;
