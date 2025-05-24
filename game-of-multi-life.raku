@@ -11,6 +11,27 @@ use MIDI::Make;
 # Global variables
 my @grid;
 my $generation = 0;
+my $scale-offset = 0;
+my %scale-letter-to-offset = (
+    "A"  =>  0,
+    "A#" =>  1,
+    "Bb" =>  1,
+    "B"  =>  2,
+    "C"  =>  3,
+    "C#" =>  4,
+    "Db" =>  4,
+    "D"  =>  5,
+    "D#" => -6,
+    "Eb" => -6,
+    "E"  => -5,
+    "F"  => -4,
+    "F#" => -3,
+    "Gb" => -3,
+    "G"  => -2,
+    "G#" => -1,
+    "Ab" => -1,
+);
+
 my $sleep-time //= 0.04;
 my $midi-file = "midi/gol-output-" ~ time.Str ~ ".mid";
 my $no-midi = False;
@@ -32,7 +53,7 @@ sub gol_grid-append-to-midi(@grid) {
     my @scale2 = (3, 5, 7, 10, 0);
     my @scale3 = (5, 7, 10, 0, 3);
     my @scale4 = (7, 10, 0, 3, 5);
-    my $base-note = 57 - 24; # A1
+    my $base-note = 33 + $scale-offset;
     my $max-octave = 5;
 
     # Map a (row, col) position to a scale-based MIDI note
@@ -189,10 +210,10 @@ sub gol_calculate-score(@grid) {
     return $score_1, $score_2;
 }
 
-constant $RED = 31;
-constant $GREEN = 32;
+constant $RED    = 31;
+constant $GREEN  = 32;
 constant $YELLOW = 33;
-constant $BLUE = 34;
+constant $BLUE   = 34;
 
 sub gol_encode-ansi-color($color, $text) {
     return "\e[{$color}m{$text}\e[0m";
@@ -219,6 +240,20 @@ sub gol_parse-args() {
             } else {
                 die "Expected numeric value after --sleep";
             }
+        } elsif $arg eq "--scale" {
+            $i++;
+            if $i < @*ARGS {
+                if @*ARGS[$i] ~~ /^\d+$/ {
+                    $scale-offset = @*ARGS[$i].Int;
+                } elsif @*ARGS[$i] ~~ /^\w+$/ {
+                    $scale-offset = %scale-letter-to-offset{@*ARGS[$i]};
+                } else {
+                    die "Expected numeric or scale letter after --scale";
+                }
+            }
+        } elsif $arg eq "-h" || $arg eq "--help" {
+            say "Usage: $0 [--scale <scale offset / letter>] [--sleep <seconds>] [<midi-output-file>/--no-midi] <json-file>";
+            exit;
         }
         $i++;
     }
